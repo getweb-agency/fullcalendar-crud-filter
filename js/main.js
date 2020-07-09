@@ -1,4 +1,14 @@
 $(function(){
+
+
+  function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+    results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+  }
+
+
     var currentDate; // Holds the day clicked when adding a new event
     var currentEvent; // Holds the event object when editing an event
     $('#color').colorpicker(); // Colopicker
@@ -35,7 +45,7 @@ $(function(){
       right: 'month, basicWeek, basicDay'
     },
         // Get all events stored in database
-        events: 'crud/getEvents.php',
+        events: 'crud/getEvents.php?cu='+getParameterByName('cu'),
         // Handle Day Click
         dayClick: function(date, event, view) {
           currentDate = date.format();
